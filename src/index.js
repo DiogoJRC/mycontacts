@@ -4,6 +4,8 @@ const routes = require("./routes");
 
 const app = express();
 
+// Recebe o body enviado na requisição
+app.use(express.json());
 app.use(routes);
 
 app.listen(3000, () =>
