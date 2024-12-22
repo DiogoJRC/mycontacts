@@ -6,6 +6,9 @@
   "repository": "git@github.com:DiogoJRC/mycontacts.git",
   "author": "Diogo Capdeville <diogoj.r.c@hotmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
   "dependencies": {
     "express": "^4.21.2"
   },
