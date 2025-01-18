@@ -4,10 +4,31 @@ export const Container = styled.div`
   margin-top: 35px;
 `;
 
+export const InputSearchContainer = styled.div`
+  width: 100%;
+
+  input {
+    width: 100%;
+    height: 50px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04);
+    background: #fff;
+    font-size: 16px;
+    outline: none;
+
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.gray[200]};
+    }
+  }
+`;
+
 export const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 32px;
   padding-bottom: 16px;
   border-bottom: 2px solid ${({ theme }) => theme.colors.gray[200]}33;
 
