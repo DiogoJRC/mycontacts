@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import PropTypes from "prop-types";
 
 import { Form, ButtonContainer } from "./styles";
@@ -9,10 +9,18 @@ import Button from "../Button";
 import FormGroup from "../FormGroup";
 
 export default function ContactForm({ buttonLabel }) {
-  const [name, setName] = useState("");
+  const [name, setName] = useState("Mateus");
+  const emailInput = useRef(null);
+
+  function handleClick() {
+    console.log(emailInput.current.value);
+  }
 
   return (
     <Form>
+      <button type="button" onClick={handleClick}>
+        Loga emailInput
+      </button>
       <FormGroup>
         <Input
           type="text"
@@ -22,8 +30,14 @@ export default function ContactForm({ buttonLabel }) {
         />
       </FormGroup>
 
-      <FormGroup error="O formato do e-mail é inválido.">
-        <Input type="email" placeholder="E-mail" $error />
+      <FormGroup>
+        <Input
+          type="email"
+          placeholder="E-mail"
+          ref={emailInput}
+          defaultValue="mateus@devacademy.com.br"
+          onChange={(event) => console.log(event.target.value)}
+        />
       </FormGroup>
 
       <FormGroup>
