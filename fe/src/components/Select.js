@@ -11,6 +11,7 @@ export default styled.select`
   font-size: 16px;
   outline: none;
   transition: border-color 0.2s ease-in;
+  appearance: none;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray[200]};
