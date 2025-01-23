@@ -32,7 +32,9 @@ export default function Home() {
       </InputSearchContainer>
 
       <Header>
-        <h2>3 Contatos</h2>
+        <h2>
+          {contacts.length} Contato{contacts.length !== 1 && "s"}
+        </h2>
         <Link to="/new">Novo contato</Link>
       </Header>
 
@@ -45,62 +47,27 @@ export default function Home() {
         </header>
       </ListContainer>
 
-      <Card>
-        <div className="info">
-          <div className="contact-name">
-            <strong>Mateus Silva</strong>
-            <small>Instagram</small>
+      {contacts.map((contact) => (
+        <Card key={contact.id}>
+          <div className="info">
+            <div className="contact-name">
+              <strong>{contact.name}</strong>
+              {contact.category_name && <small>{contact.category_name}</small>}
+            </div>
+            {contact.email && <span>{contact.email}</span>}
+            {contact.phone && <span>{contact.phone}</span>}
           </div>
-          <span>mateus@devacademy.com.br</span>
-          <span>(41) 99999-9999</span>
-        </div>
-        <div className="actions">
-          <Link to="/edit/1">
-            <img src={edit} alt="Edit" />
-          </Link>
-          <button type="button">
-            <img src={trash} alt="Delete" />
-          </button>
-        </div>
-      </Card>
 
-      <Card>
-        <div className="info">
-          <div className="contact-name">
-            <strong>Mateus Silva</strong>
-            <small>Instagram</small>
+          <div className="actions">
+            <Link to={`/edit/${contact.id}`}>
+              <img src={edit} alt="Edit" />
+            </Link>
+            <button type="button">
+              <img src={trash} alt="Delete" />
+            </button>
           </div>
-          <span>mateus@devacademy.com.br</span>
-          <span>(41) 99999-9999</span>
-        </div>
-        <div className="actions">
-          <Link to="/edit/2">
-            <img src={edit} alt="Edit" />
-          </Link>
-          <button type="button">
-            <img src={trash} alt="Delete" />
-          </button>
-        </div>
-      </Card>
-
-      <Card>
-        <div className="info">
-          <div className="contact-name">
-            <strong>Mateus Silva</strong>
-            <small>Instagram</small>
-          </div>
-          <span>mateus@devacademy.com.br</span>
-          <span>(41) 99999-9999</span>
-        </div>
-        <div className="actions">
-          <Link to="/edit/3">
-            <img src={edit} alt="Edit" />
-          </Link>
-          <button type="button">
-            <img src={trash} alt="Delete" />
-          </button>
-        </div>
-      </Card>
+        </Card>
+      ))}
     </Container>
   );
 }
