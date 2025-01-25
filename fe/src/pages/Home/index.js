@@ -31,17 +31,25 @@ export default function Home() {
   );
 
   useEffect(() => {
-    setIsloading(true);
+    async function loadContacts() {
+      try {
+        setIsloading(true);
 
-    fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`)
-      .then(async (response) => {
+        const response = await fetch(
+          `http://localhost:3001/contacts?orderBy=${orderBy}`,
+        );
         await delay(500);
 
         const json = await response.json();
         setContacts(json);
-      })
-      .catch((error) => console.log(error))
-      .finally(() => setIsloading(false));
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsloading(false);
+      }
+    }
+
+    loadContacts();
   }, [orderBy]);
 
   function handleToggleOrderBy() {
