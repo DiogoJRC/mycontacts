@@ -16,6 +16,11 @@ import trash from "../../assets/images/trash.svg";
 export default function Home() {
   const [contacts, setContacts] = useState([]);
   const [orderBy, setOrderBy] = useState("asc");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredContacts = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
   useEffect(() => {
     fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`)
@@ -30,27 +35,39 @@ export default function Home() {
     setOrderBy((prevState) => (prevState === "asc" ? "desc" : "asc"));
   }
 
+  function handleChangeSearchTerm(event) {
+    setSearchTerm(event.target.value);
+  }
+
   return (
     <Container>
       <InputSearchContainer>
-        <input type="text" placeholder="Pesquisar contato..." />
+        <input
+          type="text"
+          placeholder="Pesquisar contato..."
+          value={searchTerm}
+          onChange={handleChangeSearchTerm}
+        />
       </InputSearchContainer>
 
       <Header>
         <h2>
-          {contacts.length} Contato{contacts.length !== 1 && "s"}
+          {filteredContacts.length} Contato
+          {filteredContacts.length !== 1 && "s"}
         </h2>
         <Link to="/new">Novo contato</Link>
       </Header>
 
-      <ListHeader $orderBy={orderBy}>
-        <button type="button" onClick={handleToggleOrderBy}>
-          Nome
-          <img src={arrow} alt="Sort" />
-        </button>
-      </ListHeader>
+      {filteredContacts.length > 0 && (
+        <ListHeader $orderBy={orderBy}>
+          <button type="button" onClick={handleToggleOrderBy}>
+            Nome
+            <img src={arrow} alt="Sort" />
+          </button>
+        </ListHeader>
+      )}
 
-      {contacts.map((contact) => (
+      {filteredContacts.map((contact) => (
         <Card key={contact.id}>
           <div className="info">
             <div className="contact-name">
