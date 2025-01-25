@@ -39,7 +39,7 @@ export default function Home() {
 
         setContacts(contactsList);
       } catch (error) {
-        console.log(error);
+        console.log("Caiu no catch", error);
       } finally {
         setIsloading(false);
       }
