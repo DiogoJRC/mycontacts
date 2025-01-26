@@ -13,12 +13,13 @@ export default styled.select`
   transition: border-color 0.2s ease-in;
   appearance: none;
 
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.gray[200]};
-  }
-
   &:focus,
   &:active {
     border-color: ${({ theme }) => theme.colors.primary.main};
+  }
+
+  &:disabled {
+    background: ${({ theme }) => theme.colors.gray[100]};
+    border-color: ${({ theme }) => theme.colors.gray[200]};
   }
 `;
