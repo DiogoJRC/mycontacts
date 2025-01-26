@@ -14,7 +14,7 @@ import FormGroup from "../FormGroup";
 
 import CategoriesService from "../../services/CategoriesService";
 
-export default function ContactForm({ buttonLabel }) {
+export default function ContactForm({ buttonLabel, onSubmit }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -69,7 +69,7 @@ export default function ContactForm({ buttonLabel }) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    console.log({ name, email, phone, categoryId });
+    onSubmit({ name, email, phone, categoryId });
   }
 
   return (
@@ -131,4 +131,5 @@ export default function ContactForm({ buttonLabel }) {
 
 ContactForm.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
