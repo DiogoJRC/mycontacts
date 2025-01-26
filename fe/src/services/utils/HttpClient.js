@@ -6,36 +6,43 @@ class HttpClient {
     this.baseURL = baseURL;
   }
 
-  async get(path) {
-    await delay(500);
-
-    const response = await fetch(`${this.baseURL}${path}`);
-
-    let body = null;
-    const contentType = response.headers.get("Content-Type");
-
-    if (contentType.includes("application/json")) {
-      body = await response.json();
-    }
-
-    if (response.ok) {
-      return body;
-    }
-
-    throw new APIError(response, body);
+  get(path, options) {
+    return this.makeRequest(path, { method: "GET", headers: options?.headers });
   }
 
-  async post(path, body) {
+  post(path, options) {
+    return this.makeRequest(path, {
+      method: "POST",
+      headers: options?.headers,
+      body: options?.body,
+    });
+  }
+
+  async makeRequest(path, options) {
     await delay(500);
 
-    const headers = new Headers({
-      "Content-Type": "application/json",
-    });
+    const headers = new Headers();
+
+    if (options.body) {
+      headers.append("Content-Type", "application/json");
+    }
+
+    if (options.headers) {
+      // Duas formas de adicionar os headers enviados nas options à instância de Headers
+
+      // Object.keys(options.headers).forEach((name) => {
+      //   headers.append(name, options.headers[name]);
+      // });
+
+      Object.entries(options.headers).forEach(([name, value]) => {
+        headers.append(name, value);
+      });
+    }
 
     const response = await fetch(`${this.baseURL}${path}`, {
-      method: "POST",
+      method: options.method,
       headers,
-      body: JSON.stringify(body),
+      body: JSON.stringify(options.body),
     });
 
     let responseBody = null;
