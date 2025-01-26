@@ -7,13 +7,17 @@ import {
   Header,
   ListHeader,
   Card,
+  ErrorContainer,
 } from "./styles";
-
-import Loader from "../../components/Loader";
 
 import arrow from "../../assets/images/arrow.svg";
 import edit from "../../assets/images/edit.svg";
 import trash from "../../assets/images/trash.svg";
+import sad from "../../assets/images/sad.svg";
+
+import Loader from "../../components/Loader";
+import Button from "../../components/Button";
+
 import ContactsService from "../../services/ContactsService";
 
 export default function Home() {
@@ -21,6 +25,7 @@ export default function Home() {
   const [orderBy, setOrderBy] = useState("asc");
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsloading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   const filteredContacts = useMemo(
     () =>
@@ -38,12 +43,8 @@ export default function Home() {
         const contactsList = await ContactsService.listContacts(orderBy);
 
         setContacts(contactsList);
-      } catch (error) {
-        console.log("Name:", error.name);
-        console.log("Message:", error.message);
-        console.log("Response:", error.response);
-        console.log("Body:", error.body);
-        console.log(error);
+      } catch {
+        setHasError(true);
       } finally {
         setIsloading(false);
       }
@@ -73,13 +74,25 @@ export default function Home() {
         />
       </InputSearchContainer>
 
-      <Header>
-        <h2>
-          {filteredContacts.length} Contato
-          {filteredContacts.length !== 1 && "s"}
-        </h2>
+      <Header $hasError={hasError}>
+        {!hasError && (
+          <h2>
+            {filteredContacts.length} Contato
+            {filteredContacts.length !== 1 && "s"}
+          </h2>
+        )}
         <Link to="/new">Novo contato</Link>
       </Header>
+
+      {hasError && (
+        <ErrorContainer>
+          <img src={sad} alt="Error" />
+          <div>
+            <strong>Ocorreu um erro ao obter os seus contatos!</strong>
+            <Button type="button">Tentar novamente</Button>
+          </div>
+        </ErrorContainer>
+      )}
 
       {filteredContacts.length > 0 && (
         <ListHeader $orderBy={orderBy}>
