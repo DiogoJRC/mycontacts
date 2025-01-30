@@ -2,7 +2,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom";
 import PropTypes from "prop-types";
 
 import { Container } from "./styles";
-import arrow from "../../assets/images/arrow.svg";
+import arrow from "../../assets/images/icons/arrow.svg";
 
 export default function PageHeader({ title }) {
   return (

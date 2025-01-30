@@ -12,9 +12,9 @@ import {
   SearchNotFoundContainer,
 } from "./styles";
 
-import arrow from "../../assets/images/arrow.svg";
-import edit from "../../assets/images/edit.svg";
-import trash from "../../assets/images/trash.svg";
+import arrow from "../../assets/images/icons/arrow.svg";
+import edit from "../../assets/images/icons/edit.svg";
+import trash from "../../assets/images/icons/trash.svg";
 import sad from "../../assets/images/sad.svg";
 import emptyBox from "../../assets/images/empty-box.svg";
 import magnifierQuestion from "../../assets/images/magnifier-question.svg";
