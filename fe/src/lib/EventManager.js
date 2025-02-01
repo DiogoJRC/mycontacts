@@ -35,24 +35,3 @@ export default class EventManager {
     this.listeners.set(event, filteredListeners);
   }
 }
-
-const toastEventManager = new EventManager();
-
-function addToast1(playload) {
-  console.log("addtoast listener1", playload);
-}
-
-function addToast2(playload) {
-  console.log("addtoast listener2", playload);
-}
-
-toastEventManager.on("addtoast", addToast1);
-toastEventManager.on("addtoast", addToast2);
-
-toastEventManager.emit("addtoast", { type: "danger", text: "Texto" });
-
-toastEventManager.removeListener("addtoast", addToast1);
-
-toastEventManager.emit("addtoast", "depois de remover...");
-
-console.log(toastEventManager);
