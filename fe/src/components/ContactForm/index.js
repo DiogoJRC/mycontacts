@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import PropTypes from "prop-types";
 
 import isEmailValid from "../../utils/isEmailValid";
@@ -14,7 +14,7 @@ import FormGroup from "../FormGroup";
 
 import CategoriesService from "../../services/CategoriesService";
 
-export default function ContactForm({ buttonLabel, onSubmit }) {
+const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -27,6 +27,17 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
     useErrors();
 
   const isFormValid = name && errors.length === 0;
+
+  useImperativeHandle(ref, () => {
+    return {
+      setFieldsValues: (contact) => {
+        setName(contact.name);
+        setEmail(contact.email);
+        setPhone(contact.phone);
+        setCategoryId(contact.category_id);
+      },
+    };
+  }, []);
 
   useEffect(() => {
     async function loadCategories() {
@@ -139,9 +150,14 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
       </ButtonContainer>
     </Form>
   );
-}
+});
+
+// Para evitar o erro do eslint: Component definition is missing display name eslint(react/display-name)
+ContactForm.displayName = "ContactForm";
 
 ContactForm.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
+
+export default ContactForm;
