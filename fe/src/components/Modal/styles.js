@@ -45,5 +45,10 @@ export const Footer = styled.footer`
     background: transparent;
     color: ${({ theme }) => theme.colors.gray[200]};
     font-size: 16px;
+
+    &:disabled {
+      color: ${({ theme }) => theme.colors.gray[100]};
+      cursor: default !important;
+    }
   }
 `;
