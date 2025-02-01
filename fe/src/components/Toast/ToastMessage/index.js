@@ -9,7 +9,6 @@ import xCircleIcon from "../../../assets/images/icons/x-circle.svg";
 export default function ToastMessage({ message, onRemoveMessage }) {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      console.log("Executou o timeout...");
       onRemoveMessage(message.id);
     }, message.duration || 7000);
 
