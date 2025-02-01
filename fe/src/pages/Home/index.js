@@ -21,6 +21,7 @@ import magnifierQuestion from "../../assets/images/magnifier-question.svg";
 
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
+import Modal from "../../components/Modal";
 
 import ContactsService from "../../services/ContactsService";
 
@@ -73,6 +74,16 @@ export default function Home() {
   return (
     <Container>
       <Loader isLoading={isLoading} />
+
+      <Modal
+        danger
+        title="Tem certeza que deseja remover o contato ”Mateus Silva”?"
+        confirmLabel="Deletar"
+        onCancel={() => alert("Cancelou")}
+        onConfirm={() => alert("Confirmou")}
+      >
+        Esta ação não poderá ser desfeita!
+      </Modal>
 
       {contacts.length > 0 && (
         <InputSearchContainer>
