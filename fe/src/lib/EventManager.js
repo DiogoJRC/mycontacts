@@ -20,18 +20,39 @@ export default class EventManager {
       listener(playload);
     });
   }
+
+  removeListener(event, listenerToRemove) {
+    const listeners = this.listeners[event];
+
+    if (!listeners) {
+      return;
+    }
+
+    const filteredListeners = listeners.filter(
+      (listener) => listener !== listenerToRemove,
+    );
+
+    this.listeners[event] = filteredListeners;
+  }
 }
 
 const toastEventManager = new EventManager();
 
-toastEventManager.on("addtoast", (playload) => {
+function addToast1(playload) {
   console.log("addtoast listener1", playload);
-});
+}
 
-toastEventManager.on("addtoast", (playload) => {
+function addToast2(playload) {
   console.log("addtoast listener2", playload);
-});
+}
+
+toastEventManager.on("addtoast", addToast1);
+toastEventManager.on("addtoast", addToast2);
 
 toastEventManager.emit("addtoast", { type: "danger", text: "Texto" });
+
+toastEventManager.removeListener("addtoast", addToast1);
+
+toastEventManager.emit("addtoast", "depois de remover...");
 
 console.log(toastEventManager);
