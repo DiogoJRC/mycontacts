@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 
 import { Overlay, Container, Footer } from "./styles";
 
 import Button from "../Button";
 import ReactPortal from "../ReactPortal";
+import useAnimatedUnmount from "../../hooks/useAnimatedUnmount";
 
 export default function Modal({
   danger,
@@ -17,31 +17,7 @@ export default function Modal({
   onCancel,
   onConfirm,
 }) {
-  const [shouldRender, setShouldRender] = useState(visible);
-  const overlayRef = useRef(null);
-
-  useEffect(() => {
-    const overlayRefElement = overlayRef.current;
-
-    function handleAnimationEnd() {
-      setShouldRender(false);
-    }
-
-    if (visible) {
-      setShouldRender(true);
-    } else if (!visible && overlayRefElement) {
-      overlayRefElement.addEventListener("animationend", handleAnimationEnd);
-    }
-
-    return () => {
-      if (overlayRefElement) {
-        overlayRefElement.removeEventListener(
-          "animationend",
-          handleAnimationEnd,
-        );
-      }
-    };
-  }, [visible]);
+  const { shouldRender, animatedElementRef } = useAnimatedUnmount(visible);
 
   if (!shouldRender) {
     return null;
@@ -49,7 +25,7 @@ export default function Modal({
 
   return (
     <ReactPortal containerId="modal-root">
-      <Overlay ref={overlayRef} $isLeaving={!visible}>
+      <Overlay ref={animatedElementRef} $isLeaving={!visible}>
         <Container $isLeaving={!visible} $danger={danger}>
           <h1>{title}</h1>
 
