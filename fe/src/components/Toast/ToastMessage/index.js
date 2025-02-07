@@ -6,13 +6,18 @@ import checkCircleIcon from "../../../assets/images/icons/check-circle.svg";
 import xCircleIcon from "../../../assets/images/icons/x-circle.svg";
 import useToastMessage from "./useToastMessage";
 
-export default function ToastMessage({ message, onRemoveMessage, isLeaving }) {
-  const { handleRemoveToast, shouldRender, animatedElementRef } =
-    useToastMessage(message, onRemoveMessage, isLeaving);
-
-  if (!shouldRender) {
-    return null;
-  }
+export default function ToastMessage({
+  message,
+  isLeaving,
+  onRemoveMessage,
+  onAnimationEnd,
+}) {
+  const { handleRemoveToast, animatedElementRef } = useToastMessage(
+    message,
+    isLeaving,
+    onRemoveMessage,
+    onAnimationEnd,
+  );
 
   return (
     <Container
@@ -37,6 +42,7 @@ ToastMessage.propTypes = {
     type: PropTypes.oneOf(["default", "success", "danger"]),
     duration: PropTypes.number,
   }).isRequired,
-  onRemoveMessage: PropTypes.func.isRequired,
   isLeaving: PropTypes.bool.isRequired,
+  onRemoveMessage: PropTypes.func.isRequired,
+  onAnimationEnd: PropTypes.func.isRequired,
 };

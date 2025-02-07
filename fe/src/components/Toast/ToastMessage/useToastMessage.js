@@ -1,9 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-import useAnimatedUnmount from "../../../hooks/useAnimatedUnmount";
+export default function useToastMessage(
+  message,
+  isLeaving,
+  onRemoveMessage,
+  onAnimationEnd,
+) {
+  const animatedElementRef = useRef(null);
 
-export default function useToastMessage(message, onRemoveMessage, isLeaving) {
-  const { shouldRender, animatedElementRef } = useAnimatedUnmount(!isLeaving);
+  useEffect(() => {
+    const refElement = animatedElementRef.current;
+
+    function handleAnimationEnd() {
+      onAnimationEnd(message.id);
+    }
+
+    if (isLeaving) {
+      refElement.addEventListener("animationend", handleAnimationEnd);
+    }
+
+    return () => {
+      if (refElement) {
+        refElement.removeEventListener("animationend", handleAnimationEnd);
+      }
+    };
+  }, [isLeaving, message.id, onAnimationEnd]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -19,5 +40,5 @@ export default function useToastMessage(message, onRemoveMessage, isLeaving) {
     onRemoveMessage(message.id);
   }
 
-  return { handleRemoveToast, shouldRender, animatedElementRef };
+  return { handleRemoveToast, animatedElementRef };
 }
