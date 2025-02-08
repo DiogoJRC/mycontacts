@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom";
+import { useParams } from "react-router-dom";
 
 import ContactsService from "../../services/ContactsService";
 import toast from "../../utils/toast";
@@ -12,7 +12,7 @@ export default function useEditContact() {
   const safeAsyncAction = useSafeAsyncAction();
 
   const { id } = useParams();
-  const history = useHistory();
+  //const history = useHistory();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -32,7 +32,7 @@ export default function useEditContact() {
       } catch (error) {
         if (!(error instanceof DOMException && error.name === "AbortError")) {
           safeAsyncAction(() => {
-            history.push("/");
+            //history.push("/");
             toast({
               type: "danger",
               text: "Contato não encontrado!",
@@ -47,7 +47,7 @@ export default function useEditContact() {
     return () => {
       controller.abort();
     };
-  }, [id, history]);
+  }, [id, safeAsyncAction]);
 
   async function handleSubmit(contact) {
     try {
