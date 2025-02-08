@@ -9,7 +9,7 @@ export default function Button({
   isLoading = false,
   children,
   danger = false,
-  onClick = undefined,
+  onClick,
 }) {
   return (
     <StyledButton
