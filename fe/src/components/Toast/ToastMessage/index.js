@@ -10,18 +10,13 @@ export default function ToastMessage({
   message,
   isLeaving,
   onRemoveMessage,
-  onAnimationEnd,
+  animatedRef,
 }) {
-  const { handleRemoveToast, animatedElementRef } = useToastMessage(
-    message,
-    isLeaving,
-    onRemoveMessage,
-    onAnimationEnd,
-  );
+  const { handleRemoveToast } = useToastMessage(message, onRemoveMessage);
 
   return (
     <Container
-      ref={animatedElementRef}
+      ref={animatedRef}
       type={message.type}
       onClick={handleRemoveToast}
       tabIndex={0}
@@ -44,5 +39,5 @@ ToastMessage.propTypes = {
   }).isRequired,
   isLeaving: PropTypes.bool.isRequired,
   onRemoveMessage: PropTypes.func.isRequired,
-  onAnimationEnd: PropTypes.func.isRequired,
+  animatedRef: PropTypes.shape().isRequired,
 };

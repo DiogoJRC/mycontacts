@@ -1,31 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
-export default function useToastMessage(
-  message,
-  isLeaving,
-  onRemoveMessage,
-  onAnimationEnd,
-) {
-  const animatedElementRef = useRef(null);
-
-  useEffect(() => {
-    const refElement = animatedElementRef.current;
-
-    function handleAnimationEnd() {
-      onAnimationEnd(message.id);
-    }
-
-    if (isLeaving) {
-      refElement.addEventListener("animationend", handleAnimationEnd);
-    }
-
-    return () => {
-      if (refElement) {
-        refElement.removeEventListener("animationend", handleAnimationEnd);
-      }
-    };
-  }, [isLeaving, message.id, onAnimationEnd]);
-
+export default function useToastMessage(message, onRemoveMessage) {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       onRemoveMessage(message.id);
@@ -40,5 +15,5 @@ export default function useToastMessage(
     onRemoveMessage(message.id);
   }
 
-  return { handleRemoveToast, animatedElementRef };
+  return { handleRemoveToast };
 }
