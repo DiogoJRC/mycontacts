@@ -7,7 +7,11 @@ class HttpClient {
   }
 
   get(path, options) {
-    return this.makeRequest(path, { method: "GET", headers: options?.headers });
+    return this.makeRequest(path, {
+      method: "GET",
+      headers: options?.headers,
+      signal: options?.signal,
+    });
   }
 
   post(path, options) {
@@ -58,6 +62,7 @@ class HttpClient {
       method: options.method,
       headers,
       body: JSON.stringify(options.body),
+      signal: options.signal,
     });
 
     let responseBody = null;
