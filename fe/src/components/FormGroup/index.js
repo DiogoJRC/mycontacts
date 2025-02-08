@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Container } from "./styles";
 import Spinner from "../Spinner";
 
-export default function FormGroup({ children, error, isLoading }) {
+export default function FormGroup({ children, error = null, isLoading }) {
   return (
     <Container>
       <div className="form-item">
@@ -23,8 +23,4 @@ FormGroup.propTypes = {
   children: PropTypes.node.isRequired,
   error: PropTypes.string,
   isLoading: PropTypes.bool,
-};
-
-FormGroup.defaultProps = {
-  error: null,
 };
