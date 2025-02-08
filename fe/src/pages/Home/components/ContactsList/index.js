@@ -7,8 +7,9 @@ import trash from "../../../../assets/images/icons/trash.svg";
 import { Link } from "react-router-dom";
 
 import { Container, Header, Card } from "./styles";
+import { memo } from "react";
 
-export default function ContactsList({
+function ContactsList({
   filteredContacts,
   orderBy,
   onToggleOrderBy,
@@ -66,3 +67,5 @@ ContactsList.propTypes = {
   onToggleOrderBy: PropTypes.func.isRequired,
   onDeleteContact: PropTypes.func.isRequired,
 };
+
+export default memo(ContactsList);
