@@ -19,7 +19,7 @@ Contacts and categories CRUD.
 
 # install deps
 $ cd api
-$ yarn install
+$ yarn
 
 # run and create containers
 $ docker-compose up
